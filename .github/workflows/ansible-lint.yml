@@ -21,12 +21,11 @@ jobs:
         run: |
           echo '[defaults]' > ansible.cfg
           echo 'collections_paths = ./collections' >> ansible.cfg
-
       - name: Install role requirements
-        run: ansible-galaxy role install -r ansible/roles/requirements.yml
-
-      - name: Install collection requirements
-        run: ansible-galaxy collection install -r ansible/roles/requirements.yml
+        run: ansible-galaxy role install -r molecule/requirements.yml
+# TODO: Figure out how to get this not to error so this action is universal
+#       - name: Install collection requirements
+#         run: ansible-galaxy collection install -r molecule/requirements.yml
 
       - name: Ansible Lint
         uses: rocky-linux/ansible-lint-action@master
