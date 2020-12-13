@@ -6,10 +6,11 @@
 # TODO: Get the repo
 - name: Installing required packages
   yum:
-    name: "{{ ipsilon_packages}}"
+    name: "{{ ipsilon_packages }}"
     state: latest
   tags:
     - packages
+    - skip_ansible_lint # Bad but not sure of the versions
 
 # FAS Disabled
 - name: Initializing ipsilon if needed
@@ -37,6 +38,7 @@
   template:
     src: ipsilon-db-cfg.sql.j2
     dest: /etc/ipsilon/idp/ipsilon-db-cfg.sql
+    mode: 0644
   register: ipsilon_db_cfg
   when: ipsilon_install is changed
   tags:
@@ -55,6 +57,7 @@
   template:
     src: ipsilon-admins.sql.j2
     dest: /etc/ipsilon/idp/ipsilon-admins.sql
+    mode: 0644
   register: ipsilon_admins
   tags:
     - init
